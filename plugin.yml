@@ -1,0 +1,10 @@
+---
+name: NewsForm
+main: xtakumatutix\newsf\Main
+version: 1.0.0
+api: 3.0.0
+commands:
+ news:
+  description: NEWSを送信します
+  usage: /news
+...
