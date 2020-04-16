@@ -1,0 +1,2 @@
+# NewsPlugin
+超やばい
