@@ -14,7 +14,8 @@ use RuinPray\ui\forms\SimpleForm;
 
 Class Main extends PluginBase implements Listener {
 
-    public function onEnable(){
+    public function onEnable()
+    {
         $this->getLogger()->notice("読み込み完了_ver.1.0.0");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->AlreadyRead = new Config($this->getDataFolder() . "AlreadyRead.yml", Config::YAML);
@@ -36,7 +37,8 @@ Class Main extends PluginBase implements Listener {
         return true;
 	}
 
-	public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool{
+	public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool
+	{
 		if ($sender instanceof Player) {
     		$player = $sender;
     	    $this->sendUI($player);
@@ -46,13 +48,14 @@ Class Main extends PluginBase implements Listener {
     	return true;
     }
 
-    public function sendUI(Player $player): void{
-    $message =$this->News->get("ニュース");
-    $message = str_replace("{br}", "\n", $message);
-    $form = UI::createSimpleForm(100);
-    $form->setTitle("News");
-    $form->setContent("".$message."");
-    $form->addButton("§c閉じる");
-    UI::sendForm($player, $form);
-  }
+    public function sendUI(Player $player): void
+    {
+        $message =$this->News->get("ニュース");
+        $message = str_replace("{br}", "\n", $message);
+        $form = UI::createSimpleForm(100);
+        $form->setTitle("News");
+        $form->setContent("".$message."");
+        $form->addButton("§c閉じる");
+        UI::sendForm($player, $form);
+    }
 }
