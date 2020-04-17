@@ -1,7 +1,7 @@
 ---
 name: NewsForm
 main: xtakumatutix\newsf\Main
-version: 1.0.0
+version: 1.0.2
 api: 3.0.0
 commands:
  news:

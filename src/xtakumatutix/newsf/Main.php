@@ -5,6 +5,7 @@ namespace xtakumatutix\newsf;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\Player;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\Config;
@@ -26,33 +27,32 @@ Class Main extends PluginBase implements Listener {
 	{
 		$player = $event->getPlayer();
 		$name = $player->getName();
-		$message =$this->News->get("ニュース");
-    	$message = str_replace("{br}", "\n", $message);
 		if(!$this->AlreadyRead->get($name) == null) {
 		}else{
 		    $this->AlreadyRead->set($name);
             $this->AlreadyRead->save();
-            $form = UI::createSimpleForm(100);
-		    $form->setTitle("News");
-		    $form->setContent("".$message."");
-		    $form->addButton("§c閉じる");   
-		    UI::sendForm($player, $form);
+		    $this->sendUI($player);
 		}
         return true;
 	}
+
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool{
 		if ($sender instanceof Player) {
-    		$sender->sendMessage("§cプレイヤーにしかformを送れないよ！");
+    		$player = $sender;
+    	    $this->sendUI($player);
     	} else {
-			$player = $sender;
-		    $message =$this->News->get("ニュース");
-    	    $message = str_replace("{br}", "\n", $message);
-            $form = UI::createSimpleForm(100);
-		    $form->setTitle("News");
-		    $form->setContent("".$message."");
-		    $form->addButton("§c閉じる");   
-		    UI::sendForm($player, $form);
+
     	}
     	return true;
     }
+
+    public function sendUI(Player $player): void{
+    $message =$this->News->get("ニュース");
+    $message = str_replace("{br}", "\n", $message);
+    $form = UI::createSimpleForm(100);
+    $form->setTitle("News");
+    $form->setContent("".$message."");
+    $form->addButton("§c閉じる");
+    UI::sendForm($player, $form);
+  }
 }
