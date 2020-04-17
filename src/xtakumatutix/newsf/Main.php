@@ -24,28 +24,26 @@ Class Main extends PluginBase implements Listener {
         ));
     }
 
-	public function onJoin(PlayerJoinEvent $event)
+    public function onJoin(PlayerJoinEvent $event)
 	{
-		$player = $event->getPlayer();
-		$name = $player->getName();
-		if(!$this->AlreadyRead->get($name) == null) {
-		}else{
-		    $this->AlreadyRead->set($name);
+        $player = $event->getPlayer();
+        $name = $player->getName();
+        if($this->AlreadyRead->get($name) == null) 
+        {
+            $this->AlreadyRead->set($name);
             $this->AlreadyRead->save();
-		    $this->sendUI($player);
-		}
+            $this->sendUI($player);
+        }
+    }
+
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool
+    {
+        if ($sender instanceof Player) 
+        {
+            $player = $sender;
+            $this->sendUI($player);
+        }
         return true;
-	}
-
-	public function onCommand(CommandSender $sender, Command $command, string $label, array $args):bool
-	{
-		if ($sender instanceof Player) {
-    		$player = $sender;
-    	    $this->sendUI($player);
-    	} else {
-
-    	}
-    	return true;
     }
 
     public function sendUI(Player $player): void
@@ -54,7 +52,7 @@ Class Main extends PluginBase implements Listener {
         $message = str_replace("{br}", "\n", $message);
         $form = UI::createSimpleForm(100);
         $form->setTitle("News");
-        $form->setContent("".$message."");
+        $form->setContent((string)$message);
         $form->addButton("§c閉じる");
         UI::sendForm($player, $form);
     }
